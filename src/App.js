@@ -1,5 +1,6 @@
 import LoginForm from './pages/loginForm';
 import Stat from './pages/stat';
+import Log from './pages/log';
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
@@ -17,15 +18,18 @@ function App() {
   const [error, setError] = useState("");
   
   const Login = details => {
-    console.log(details);
-    if (details.name == adminUser.username && details.password == adminUser.password){
-      console.log("Logged in");
+    //console.log(details);
+    if (details.name === adminUser.username && details.password === adminUser.password){
+      console.log("Acceso Otorgado");
+      //localStorage.setItem('token', true);
+      //localStorage.setItem('user', "details.name");
       setUser({
         username: details.name,
       });
 
     }else{
-      console.log("Details do not match!");
+      setError("Usuario y contraseña invalidos.");
+      //console.log(error);
     }
   }
 
@@ -33,15 +37,17 @@ function App() {
     setUser({
       username: "",
     });
+    //localStorage.clear();
   }
   return(
+    //console.log(localStorage.getItem('token')),
     <div>
       <div className="App">
           {(user.username !== "") ? 
           (
-          <Stat user = {user.username}/>
-          ) : (
-          <LoginForm Login = {Login} error = {error} /> 
+            <Stat user = {user.username} />
+          ) : (   
+            < LoginForm Login = {Login} error = {error} />
         )}
         </div>
     </div>
